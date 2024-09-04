@@ -14,7 +14,7 @@ ofxFastFboReader::~ofxFastFboReader()
 	}
 }
 
-bool ofxFastFboReader::readToPixels(ofFbo &fbo, ofPixelsRef pix, ofImageType type)
+bool ofxFastFboReader::readToPixels(ofFbo &fbo, ofPixels &pix, ofImageType type)
 {
 	genPBOs();
 	
@@ -62,16 +62,15 @@ bool ofxFastFboReader::readToPixels(ofFbo &fbo, ofPixelsRef pix, ofImageType typ
 		setupPBOs(num_bytes);
 	}
 	
-	glReadBuffer(GL_FRONT);
 	
+	glReadBuffer(GL_FRONT);
 	fbo.bind();
 	
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[index]);
-	glReadPixels(0, 0, width, height, glType, GL_UNSIGNED_BYTE, NULL);
+	glReadPixels(0, 0, width, height, glType, GL_UNSIGNED_BYTE, 0);
 	
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[nextIndex]);
 	unsigned char* mem = (unsigned char*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
-	
 	if (mem)
 	{
 		pix.setFromPixels(mem, width, height, channels);
