@@ -1,10 +1,15 @@
-#include "testApp.h"
-#include "ofAppGlutWindow.h"
+#include "ofMain.h"
 
-//--------------------------------------------------------------
-int main(){
-	ofAppGlutWindow window; // create a window
-	// set width, height, mode (OF_WINDOW or OF_FULLSCREEN)
-	ofSetupOpenGL(&window, 1024, 768, OF_WINDOW);
-	ofRunApp(new testApp()); // start the app
+#include "testApp.h"
+
+int main() {
+	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
+	ofGLWindowSettings settings;
+	settings.setSize(1024, 768);
+	settings.windowMode = OF_WINDOW; //can also be OF_FULLSCREEN
+    settings.setGLVersion(4, 1); // OpenGL 3.1 version
+	auto window = ofCreateWindow(settings);
+
+	ofRunApp(window, make_shared<testApp>());
+	ofRunMainLoop();
 }

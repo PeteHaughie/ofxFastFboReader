@@ -11,3 +11,7 @@ build
 xcuserdata
 DerivedData
 project.xcworkspace
+obj
+.xcodeproj
+.xcconfig
+.vscode
